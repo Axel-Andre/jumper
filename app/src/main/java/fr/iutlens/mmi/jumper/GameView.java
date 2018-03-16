@@ -20,6 +20,7 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
     private float current_pos;
     private Hero hero;
     private double prep;
+    private Fond fond;
 
     public GameView(Context context) {
         super(context);
@@ -47,6 +48,9 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
     private void init(AttributeSet attrs, int defStyle) {
 
         // Chargement des feuilles de sprites
+        SpriteSheet.register(R.drawable.fondd,2,1,this.getContext());
+        fond = new Fond(R.drawable.fondd);
+
         SpriteSheet.register(R.drawable.decor_running,3,4,this.getContext());
         level = new Level(R.drawable.decor_running,null);
         SpriteSheet.register(R.drawable.running_rabbit,3,3,this.getContext());
@@ -92,13 +96,14 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
         // On met une couleur de fond
         canvas.drawColor(0xff000000);
 
+        fond.paint(canvas);
+
         // On choisit la transformation à appliquer à la vue i.e. la position
         // de la "camera"
         setCamera(canvas);
 
         // Dessin des différents éléments
         level.paint(canvas,current_pos);
-
         float x = 1;
         float y = hero.getY();
         hero.paint(canvas,level.getX(x),level.getY(y));
