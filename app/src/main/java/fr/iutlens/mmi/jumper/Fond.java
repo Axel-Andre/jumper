@@ -15,7 +15,15 @@ class Fond {
         sprite = SpriteSheet.get(sprite_id);
     }
 
-    public void paint(Canvas canvas) {
+    public void paint(Canvas canvas, int height) {
+       canvas.save();
+
+       float scale = (1f*height)/sprite.h;
+       canvas.scale(scale,scale);
+
         sprite.paint(canvas,0,0,0);
+        sprite.paint(canvas,1,sprite.w,0);
+
+       canvas.restore();
     }
 }
