@@ -14,7 +14,7 @@ import fr.iutlens.mmi.jumper.utils.SpriteSheet;
 import fr.iutlens.mmi.jumper.utils.TimerAction;
 
 public class GameView extends View implements TimerAction, AccelerationProxy.AccelerationListener {
-    public static final float SPEED = 0.1f;
+    public static float SPEED = 0.1f;
     private RefreshHandler timer;
     private Level level;
     private float current_pos;
@@ -22,6 +22,7 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
     private double prep;
     private Fond fond;
     private float d;
+    public int score = 0;
 
     public GameView(Context context) {
         super(context);
@@ -81,9 +82,14 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
             timer.scheduleRefresh(30); // programme le prochain rafraichissement
             current_pos += SPEED;
             d += SPEED/40f;
+            score = score + 30;
             if (current_pos>level.getLength()) current_pos = 0;
             hero.update(level.getFloor(current_pos+1),level.getSlope(current_pos+1));
             invalidate(); // demande à rafraichir la vue
+
+        }
+        if (score %  30000 == 0){
+            SPEED = SPEED +0.1f;
         }
     }
 
