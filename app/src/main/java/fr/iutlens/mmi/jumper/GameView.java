@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -70,10 +71,23 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!timer.isRunning()) timer.scheduleRefresh(30);
+                if (!timer.isRunning())
+                    timer.scheduleRefresh(30);
+            }
+        });
+        this.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (timer.isRunning() && motionEvent.getAction()==MotionEvent.ACTION_DOWN){
+                    hero.jump(3);
+                    return true;
+                }
+                return false;
             }
         });
     }
+
+
 
     /**
      * Mise à jour (faite toutes les 30 ms)
@@ -84,12 +98,19 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
             timer.scheduleRefresh(30); // programme le prochain rafraichissement
             current_pos += SPEED;
             d += SPEED / 40f;
+            if(!hero.perdu){
             setScore(score + 30);
+            }
+
             if (current_pos > level.getLength()) current_pos = 0;
             hero.update(level.getFloor(current_pos + 1), level.getSlope(current_pos + 1));
-            invalidate(); // demande à rafraichir la vue
 
+            if(hero.perdu){
+                SPEED=0f;
+            }
+            invalidate(); // demande à rafraichir la vue
         }
+
         if (score % 30000 == 0) {
             SPEED = SPEED + 0.1f;
         }

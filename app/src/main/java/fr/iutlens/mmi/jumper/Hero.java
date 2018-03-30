@@ -1,6 +1,7 @@
 package fr.iutlens.mmi.jumper;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import fr.iutlens.mmi.jumper.utils.SpriteSheet;
 
@@ -11,6 +12,7 @@ import fr.iutlens.mmi.jumper.utils.SpriteSheet;
 public class Hero {
 
     public static final int SAME_FRAME = 3;
+    private static final float EPSILON = 0.5f;
     private final float BASELINE = 0.93f;
 
 
@@ -28,7 +30,7 @@ public class Hero {
 
     private int frame;
     private int cpt;
-
+    public boolean perdu = false;
 
 
     public Hero(int sprite_id, float vx){
@@ -47,12 +49,21 @@ public class Hero {
     }
 
     public void update(float floor, float slope){
+        if (perdu) return;
+
         y += vy; // inertie
         float altitude = y-floor;
         if (altitude <0){ // On est dans le sol : atterrissage
+            float a= altitude-vy+slope*vx;
+            if (a<-EPSILON && altitude < -EPSILON) {
+                perdu =true;
+                Log.d("altitude","perdu :"+y+" "+vy+" "+floor+" "+slope+" "+a);
+                return;
+            }
             vy = 0; //floor-y;
             y = floor;
             altitude = 0;
+
         }
         if (altitude == 0){ // en contact avec le sol
             if (jump != 0) {
@@ -62,11 +73,11 @@ public class Hero {
 //                vy = -G*vx;
                 vy = (slope-G)*vx; // On suit le sol...
                 cpt = (cpt+1)% SAME_FRAME;
-                if (cpt==0) frame = (frame+1)%8;
+                if (cpt==0) frame = (frame+1)%6;
             }
         } else { // actuellement en vol
             vy -= G*vx; // effet de la gravité
-            frame = (vy>0) ? 3 : 5;
+            frame = (vy>0) ? 7 : 6;
 //            if (y < floor+slope*vx) y = floor+slope*vx; // atterrissage ?
         }
 
