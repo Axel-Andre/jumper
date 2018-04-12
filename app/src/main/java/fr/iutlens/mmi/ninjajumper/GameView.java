@@ -55,7 +55,7 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
 
         SpriteSheet.register(R.drawable.decor_running,3,4,this.getContext());
         level = new Level(R.drawable.decor_running,null);
-        SpriteSheet.register(R.drawable.running_rabbit,3,3,this.getContext());
+        SpriteSheet.register(R.drawable.running_rabbit,3,6,this.getContext());
         hero = new Hero(R.drawable.running_rabbit,SPEED);
 
 
@@ -76,7 +76,7 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (timer.isRunning() && motionEvent.getAction()==MotionEvent.ACTION_DOWN){
-                    hero.jump(3);
+                    hero.jump(6);
                     return true;
                 }
                 return false;
