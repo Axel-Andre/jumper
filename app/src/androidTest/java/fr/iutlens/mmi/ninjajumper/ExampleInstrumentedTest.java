@@ -1,4 +1,4 @@
-package fr.iutlens.mmi.jumper;
+package fr.iutlens.mmi.ninjajumper;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

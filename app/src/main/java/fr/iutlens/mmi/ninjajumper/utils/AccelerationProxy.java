@@ -1,13 +1,10 @@
-package fr.iutlens.mmi.jumper.utils;
+package fr.iutlens.mmi.ninjajumper.utils;
 
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.util.Log;
-
-import java.util.Arrays;
 
 /**
  * Created by dubois on 23/04/15.

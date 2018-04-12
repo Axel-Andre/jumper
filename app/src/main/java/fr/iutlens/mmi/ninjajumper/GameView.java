@@ -1,19 +1,16 @@
-package fr.iutlens.mmi.jumper;
+package fr.iutlens.mmi.ninjajumper;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.Arrays;
-
-import fr.iutlens.mmi.jumper.utils.AccelerationProxy;
-import fr.iutlens.mmi.jumper.utils.RefreshHandler;
-import fr.iutlens.mmi.jumper.utils.SpriteSheet;
-import fr.iutlens.mmi.jumper.utils.TimerAction;
+import fr.iutlens.mmi.ninjajumper.utils.AccelerationProxy;
+import fr.iutlens.mmi.ninjajumper.utils.RefreshHandler;
+import fr.iutlens.mmi.ninjajumper.utils.SpriteSheet;
+import fr.iutlens.mmi.ninjajumper.utils.TimerAction;
 
 public class GameView extends View implements TimerAction, AccelerationProxy.AccelerationListener {
     public static float SPEED = 0.1f;

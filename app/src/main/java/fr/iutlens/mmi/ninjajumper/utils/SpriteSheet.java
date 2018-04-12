@@ -1,4 +1,4 @@
-package fr.iutlens.mmi.jumper.utils;
+package fr.iutlens.mmi.ninjajumper.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
