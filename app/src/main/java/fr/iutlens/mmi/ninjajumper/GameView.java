@@ -18,11 +18,12 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
     private Level level;
     private float current_pos;
     private Hero hero;
-    private double prep;
     private Fond fond;
     private float d;
     public int score = 0;
     private TextView textViewScore;
+    private View textViewMort;
+    private View buttonJouer;
 
     public GameView(Context context) {
         super(context);
@@ -92,20 +93,20 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
     @Override
     public void update() {
         if (this.isShown()) { // Si la vue est visible
-            timer.scheduleRefresh(30); // programme le prochain rafraichissement
+            if(!hero.perdu){
+                setScore(score + 30);
+                timer.scheduleRefresh(30); // programme le prochain rafraichissement
+            } else {
+                setVisibilityPerdu(true);
+            }
+
             current_pos += SPEED;
             d += SPEED / 40f;
-            if(!hero.perdu){
-            setScore(score + 30);
-            }
 
             if (current_pos > level.getLength()) current_pos = 0;
             hero.update(level.getFloor(current_pos + 1), level.getSlope(current_pos + 1));
 
-            if(hero.perdu){
-                SPEED=0f;
-            }
-            invalidate(); // demande à rafraichir la vue
+           invalidate(); // demande à rafraichir la vue
         }
 
         if (score % 30000 == 0) {
@@ -187,5 +188,40 @@ public class GameView extends View implements TimerAction, AccelerationProxy.Acc
     public void setScore(int score) {
         this.score = score;
         if (textViewScore != null) textViewScore.setText(""+score);
+    }
+
+
+
+
+    public void setViewPerdu(View buttonJouer, View textViewMort) {
+        this.textViewMort = textViewMort;
+        this.buttonJouer = buttonJouer;
+    }
+
+    private void setVisibilityPerdu(boolean visible) {
+        if (visible){
+            textViewMort.setVisibility(View.VISIBLE);
+            buttonJouer.setVisibility(View.VISIBLE);
+        } else {
+            textViewMort.setVisibility(View.GONE);
+            buttonJouer.setVisibility(View.GONE);
+        }
+
+
+    }
+
+    public void setCurrent_pos(float current_pos) {
+        this.current_pos = current_pos;
+        if (current_pos ==0) d=0;
+    }
+
+    public void rejouer() {
+        setVisibilityPerdu(false);
+        hero = new Hero(R.drawable.running_rabbit,SPEED);
+        level = new Level(R.drawable.decor_running,null);
+        setScore(0);
+        setCurrent_pos(0);
+        timer.scheduleRefresh(30);
+
     }
 }

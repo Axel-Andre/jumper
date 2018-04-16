@@ -10,6 +10,7 @@ import fr.iutlens.mmi.ninjajumper.utils.SpriteSheet;
 
 public class Level {
     public static final int VISIBLE_TILES = 10;
+    private static final int GROUND = -20;
 
 
     // Codes pour le décor
@@ -23,7 +24,8 @@ public class Level {
 
     private final String CODE = " (=)o/\\<^>*éè+-";
     private final String SLOPE ="     +-    +-";
-    private String def = "(/\\==\\^///==^==^\\\\^==/)----<^é>++(//=^=> ++o-- *- o +(==^=)";
+    //private String def = "(/\\==\\^///==^==^\\\\^==/)----<^é>++(//=^=> ++o-- *- o +(==^=)";
+    private String def = "(/////   ^^^  ^    ^^    ^^== ----- =====    ++/    +++/    +++//\\==\\^///==^==^\\\\^==/)----<^é>++(//=^=> ++o-- *- o +(==^=)";
 
 
     private int[] sprite_id;
@@ -71,6 +73,9 @@ public class Level {
                         baseline[pos] = current_baseline;
                         --current_baseline;
                         break;
+                }
+                if (code == 0){
+                    baseline[pos] = GROUND;
                 }
                 ++pos;
             } else {
